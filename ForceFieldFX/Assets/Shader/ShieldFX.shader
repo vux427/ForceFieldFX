@@ -118,8 +118,7 @@
 					discard;
 
 				//distortion
-				fixed2 offset = main * _Distort * _GrabTexture_TexelSize.xy;
-				i.screenPos.xy = offset + i.screenPos.xy;
+				i.screenPos.xy += (main.xy * 2 - 1) * _Distort * _GrabTexture_TexelSize.xy;
 				fixed3 distortColor = tex2Dproj(_GrabTexture, i.screenPos);
 				distortColor *= _MainColor * _MainColor.a + 1;
 
