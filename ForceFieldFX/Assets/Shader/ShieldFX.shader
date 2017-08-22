@@ -39,9 +39,8 @@ Shader "Unlit/ShieldFX"
 			{
 				fixed2 uv : TEXCOORD0;
 				fixed4 vertex : SV_POSITION;
-				fixed4 worldPos : TEXCOORD1;
-				fixed3 rimColor :TEXCOORD2;
-				fixed4 screenPos: TEXCOORD3;
+				fixed3 rimColor :TEXCOORD1;
+				fixed4 screenPos: TEXCOORD2;
 			};
 
 			sampler2D _MainTex, _CameraDepthTexture, _GrabTexture;
@@ -70,26 +69,22 @@ Shader "Unlit/ShieldFX"
 			fixed4 frag (v2f i,fixed face : VFACE) : SV_Target
 			{
 				//intersection
-				fixed zBuffer = LinearEyeDepth(tex2Dproj(_CameraDepthTexture,UNITY_PROJ_COORD(i.screenPos)).r);
-				fixed intersect = saturate((abs(zBuffer - i.screenPos.z)) / _IntersectionThreshold);
+				fixed intersect = saturate((abs(LinearEyeDepth(tex2Dproj(_CameraDepthTexture,i.screenPos).r) - i.screenPos.z)) / _IntersectionThreshold);
 
 				fixed3 main = tex2D(_MainTex, i.uv);
-				if (distance(main, 0) <= 0) //discard black texture
-					discard;
-
 				//distortion
 				i.screenPos.xy += (main.rg * 2 - 1) * _Distort * _GrabTexture_TexelSize.xy;
 				fixed3 distortColor = tex2Dproj(_GrabTexture, i.screenPos);
 				distortColor *= _MainColor * _MainColor.a + 1;
 
 				//intersect hightlight
-				i.rimColor *= intersect * (face > 0 ? 1:0);
-				fixed3 col = main * _MainColor * pow(_Fresnel,i.rimColor) ;
+				i.rimColor *= intersect * clamp(0,1,face);
+				main *= _MainColor * pow(_Fresnel,i.rimColor) ;
 				
 				//lerp distort color & fresnel color
-				col = lerp(distortColor, col, i.rimColor.r);
-				col += (1 - intersect) * (face > 0 ? .03:.3) * _MainColor * _Fresnel;
-				return fixed4(col,.9);
+				main = lerp(distortColor, main, i.rimColor.r);
+				main += (1 - intersect) * (face > 0 ? .03:.3) * _MainColor * _Fresnel;
+				return fixed4(main,.9);
 			}
 			ENDCG
 		}
