@@ -1,3 +1,6 @@
+- - - -About License- - - -
+All of my research results is free,If you need it , just take it and use them, don't worry about license problem. I hope my open source result can help peoples to study well , Thanks you for your like.
+
 # ForceFieldFX
 
 Preview：https://www.youtube.com/watch?v=wbL2FCxlCe4
