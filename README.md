@@ -1,6 +1,8 @@
 # ForceFieldFX
 
-Preview：https://www.youtube.com/watch?v=wbL2FCxlCe4
+Preview：
+
+[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/wbL2FCxlCe4/0.jpg)](https://www.youtube.com/watch?v=wbL2FCxlCe4)
 
 -Used Technical-
 
@@ -8,9 +10,10 @@ Preview：https://www.youtube.com/watch?v=wbL2FCxlCe4
   
   UV Offset 貼圖捲動
   
-  Distortion折射/扭曲效果
+  Distortion 折射/扭曲效果
   
   Fresnel 邊緣反射
   
 ## License 
-All of my research results is free,If you need it , just take it and use them, don't worry about license problem. I hope my open source result can help people to study well , Thanks you for your like.
+All of my github repository is free,it can be used directly without notice author(me), don't worry about license problem.
+If it can help you work or study,that's my honor.Thanks you for your like.
