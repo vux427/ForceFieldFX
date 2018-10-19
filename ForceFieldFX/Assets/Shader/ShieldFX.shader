@@ -52,6 +52,7 @@ Shader "Unlit/ShieldFX"
 				v2f o;
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+				o.screenPos = ComputeGrabScreenPos(o.vertex);
 
 				//scroll uv
 				o.uv.x += _Time * _ScrollSpeedU;
@@ -61,7 +62,7 @@ Shader "Unlit/ShieldFX"
 				fixed3 viewDir = normalize(ObjSpaceViewDir(v.vertex));
 				fixed dotProduct = 1 - saturate(dot(v.normal, viewDir));
 				o.rimColor = smoothstep(1 - _FresnelWidth, 1.0, dotProduct) * .5f;
-				o.screenPos = ComputeScreenPos(o.vertex);
+				
 				COMPUTE_EYEDEPTH(o.screenPos.z);//eye space depth of the vertex 
 				return o;
 			}
